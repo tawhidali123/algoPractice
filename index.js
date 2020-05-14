@@ -156,32 +156,102 @@
 
 
 
-function sumZero(arr){
-  arr.sort((a,b) => a - b) 
-  let p1 = 0
-  let p2 = arr.length - 1
+// function sumZero(arr){
+//   arr.sort((a,b) => a - b) 
+//   let p1 = 0
+//   let p2 = arr.length - 1
 
-  console.log(arr)
+//   console.log(arr)
 
-  while(p1 < p2){
-    let sum = arr[p1] + arr[p2]
-    if(sum === 0){
-      return `${arr[p1]}, ${arr[p2]}`
-    } else if(sum > 0){
-      p2--
-    } else{
-      p1++
-    }
+//   while(p1 < p2){
+//     let sum = arr[p1] + arr[p2]
+//     if(sum === 0){
+//       return `${arr[p1]}, ${arr[p2]}`
+//     } else if(sum > 0){
+//       p2--
+//     } else{
+//       p1++
+//     }
       
-  }
+//   }
 
-  return false
+//   return false
+// }
+
+// sumZero([-4,-3,-2,-1,0,1,2,3,5])
+// sumZero([1,2,3,4,0,-1,-2])
+
+
+
+//////////////////////////////////////////////
+
+// Say you have an array for which the ith element is the price of a given stock on day i.
+
+// If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+
+// Note that you cannot sell a stock before you buy one.
+
+// Example 1:
+
+// Input: [7,1,5,3,6,4]
+// Output: 5
+// Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+//              Not 7-1 = 6, as selling price needs to be larger than buying price.
+// Example 2:
+
+// Input: [7,6,4,3,1]
+// Output: 0
+// Explanation: In this case, no transaction is done, i.e. max profit = 0.
+
+
+
+
+
+/////////////////////////////////////////////////
+
+// Given a collection of intervals, merge all overlapping intervals.
+
+// Example 1:
+
+// Input: [[1,3],[2,6],[8,10],[15,18]]
+// Output: [[1,6],[8,10],[15,18]]
+// Explanation: Since intervals [1,3] and [2,6] overlaps, merge them into [1,6].
+// Example 2:
+
+// Input: [[1,4],[4,5]]
+// Output: [[1,5]]
+// Explanation: Intervals [1,4] and [4,5] are considered overlapping.
+
+
+// GAMEPLAN
+//find lowest value , highest value (sort)
+//first higher val >= lower val of second item
+  //if it is, take first lowest val and make it the beginning val for second iteration val
+
+
+function  mergeIntervals(arr){
+  arr.sort((a,b) => a[0] - b[0])
+  let queue = []
+  let low = arr[0][0]
+  let high = arr[0][1]
+
+  for(i = 1; i < arr.length; i++){
+    let val = arr[i]
+    if(high >= val[0]){
+      let newArr = [low, val[1]]
+      queue.push(newArr)
+      low = newArr[0], high = newArr[1]
+    } else{
+      queue.push(val)
+      low = val[0]
+      high = val[1]
+    }
+  }
+  return queue
 }
 
-sumZero([-4,-3,-2,-1,0,1,2,3,5])
-sumZero([1,2,3,4,0,-1,-2])
 
-
+mergeIntervals([[1,3],[2,6],[8,10],[15,18]])
 
 
 
