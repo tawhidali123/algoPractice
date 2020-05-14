@@ -45,4 +45,69 @@ function taskScheduler(arr, n){
 
 
 
+// //////////////////////////////////
+// ques #2
+
+// write a function that takes two arrays. Return true if every element in the array has a corresponding element squared in the second array
+
+// example:
+// same([1,2,3], [4,1,9]) // true
+// same([1,2,3], [1,9]) // false
+// same([1,2,1], [4,4,1]) // false [must be same frequency]
+
+// gameplan
+// make a table that consists of how many times number comes around each time for first element
+
+// do the same for second element
+
+// see if key from first table is key^2 from second table
+
+// also check if the amount in squared value table is the same as first table 
+
+// return true
+
+function same(arr1, arr2){
+  if(arr1.length !== arr2.length){
+    return false
+  }
+
+  let arr1Hash = {}
+  let arr2Hash = {}
+
+  for(let val of arr1){
+    if(arr1Hash[val]){
+      arr1Hash[val] = arr1Hash[val] + 1
+    } else{
+      arr1Hash[val] = 1
+    }
+  }
+
+  for(let val of arr2){
+    if(arr2Hash[val]){
+      arr2Hash[val] = arr2Hash[val] + 1
+    } else{
+      arr2Hash[val] = 1
+    }
+  }
+
+  console.log(arr1Hash, arr2Hash)
+
+  for(let key in arr1Hash){
+    if(!(key ** 2 in arr2Hash)){
+      return false
+    }
+    if(arr1Hash[key] !== arr2Hash[key ** 2]){
+      return false
+    }
+  }
+
+  return true
+
+}
+
+same([1,2,2,3], [4,4,1,9])
+
+
+
+
 
