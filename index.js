@@ -10,6 +10,47 @@
 // Output: 8
 // Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 
+// GAMEPLAN
+// take every char and make it into a obj with number of times
+// have a queue to store tasks and intervals
+// loop through obj until keys are 0 
+// if last element in queue is same as iteration put idle 
+
+function taskScheduler(arr, n){
+  let hashObj = {}
+  let que = []
+
+  for(let val of arr){
+    hashObj[val] ? hashObj[val] = hashObj[val] + 1 : hashObj[val] = 1
+  }
+
+  let number = 0
+
+  que.push(arr[0])
+  
+  for(i = 1; i < arr.length + n; i++){
+    let val  = arr[i]
+    if(que[number] in hashObj !== 0 && que[number] !== val){
+      que.push(val)
+      number ++
+      hashObj[val] = hashObj[val] - 1
+    } else{
+      que.push('idle')
+      number ++
+    }
+    
+  }
+
+return que
+
+
+}
+
+// taskScheduler(["A","A","A","B","B","B"], 2)
+
+
+
+
 
 
 // function taskScheduler(arr, n){
@@ -68,42 +109,42 @@
 
 
 
-// function same(arr1, arr2){
-//   if(arr1.length !== arr2.length){
-//     return false
-//   }
+function same(arr1, arr2){
+  if(arr1.length !== arr2.length){
+    return false
+  }
 
-//   let arr1Hash = {}
-//   let arr2Hash = {}
+  let arr1Hash = {}
+  let arr2Hash = {}
 
-//   for(let val of arr1){
-//     if(arr1Hash[val]){
-//       arr1Hash[val] = arr1Hash[val] + 1
-//     } else{
-//       arr1Hash[val] = 1
-//     }
-//   }
+  for(let val of arr1){
+    if(arr1Hash[val]){
+      arr1Hash[val] = arr1Hash[val] + 1
+    } else{
+      arr1Hash[val] = 1
+    }
+  }
 
-//   for(let val of arr2){
-//     if(arr2Hash[val]){
-//       arr2Hash[val] = arr2Hash[val] + 1
-//     } else{
-//       arr2Hash[val] = 1
-//     }
-//   }
+  for(let val of arr2){
+    if(arr2Hash[val]){
+      arr2Hash[val] = arr2Hash[val] + 1
+    } else{
+      arr2Hash[val] = 1
+    }
+  }
 
-//   for(let key in arr1Hash){
-//     if(!(key ** 2 in arr2Hash)){
-//       return false
-//     }
-//     if(arr1Hash[key] !== arr2Hash[key ** 2]){
-//       return false
-//     }
-//   }
+  for(let key in arr1Hash){
+    if(!(key ** 2 in arr2Hash)){
+      return false
+    }
+    if(arr1Hash[key] !== arr2Hash[key ** 2]){
+      return false
+    }
+  }
 
-//   return true
+  return true
 
-// }
+}
 
 // same([1,2,2,3], [4,4,1,9])
 
@@ -115,22 +156,22 @@
 // example:
 // countUnique([1,1,1,2]) //2
 
-// function countUnique(arr){
-//   let p1 = 0
-//   let p2 = 1
+function countUnique(arr){
+  let p1 = 0
+  let p2 = 1
 
-//   while(p2 < arr.length){
-//     if(arr[p1] === arr[p2]){
-//       p2++
-//     } else{
-//       arr[p1 + 1] = arr[p2]
-//       p1++
-//       p2++
-//     }
-//   }
-//   console.log(arr)
-//   return p1 + 1
-// }
+  while(p2 < arr.length){
+    if(arr[p1] === arr[p2]){
+      p2++
+    } else{
+      arr[p1 + 1] = arr[p2]
+      p1++
+      p2++
+    }
+  }
+  console.log(arr)
+  return p1 + 1
+}
 
 // countUnique([1,1,1,2])
 // countUnique([1,1,1,2,2,3,4,4])
@@ -156,27 +197,27 @@
 
 
 
-// function sumZero(arr){
-//   arr.sort((a,b) => a - b) 
-//   let p1 = 0
-//   let p2 = arr.length - 1
+function sumZero(arr){
+  arr.sort((a,b) => a - b) 
+  let p1 = 0
+  let p2 = arr.length - 1
 
-//   console.log(arr)
+  console.log(arr)
 
-//   while(p1 < p2){
-//     let sum = arr[p1] + arr[p2]
-//     if(sum === 0){
-//       return `${arr[p1]}, ${arr[p2]}`
-//     } else if(sum > 0){
-//       p2--
-//     } else{
-//       p1++
-//     }
+  while(p1 < p2){
+    let sum = arr[p1] + arr[p2]
+    if(sum === 0){
+      return `${arr[p1]}, ${arr[p2]}`
+    } else if(sum > 0){
+      p2--
+    } else{
+      p1++
+    }
       
-//   }
+  }
 
-//   return false
-// }
+  return false
+}
 
 // sumZero([-4,-3,-2,-1,0,1,2,3,5])
 // sumZero([1,2,3,4,0,-1,-2])
@@ -251,7 +292,67 @@ function  mergeIntervals(arr){
 }
 
 
-mergeIntervals([[1,3],[2,6],[8,10],[15,18]])
+// mergeIntervals([[1,3],[2,6],[8,10],[15,18]])
 
+
+///////////////////////////////////////
+// Given a binary tree, return all root-to-leaf paths.
+
+// Note: A leaf is a node with no children.
+
+// Example:
+
+// Input:
+
+//    1
+//  /   \
+// 2     3
+//  \
+//   5
+
+// Output: ["1->2->5", "1->3"]
+
+// Explanation: All root-to-leaf paths are: 1->2->5, 1->3
+
+class Node {
+  constructor(val){
+   this.value = val
+    this.left = null
+    this.right = null
+  }
+}
+
+class BinaryTree {
+  constructor(){
+    this.root = null
+  }
+
+  DFSPreorder(){
+    let leftSide = []
+    let rightSide =[]
+    let current = this.root
+
+    leftSide.push(current)
+    rightSide.push(current)
+
+    function leftTraverse(node){
+      leftSide.push(node)
+      if(node.left) leftTraverse(node.left)
+      if(node.right) leftTraverse(node.right)
+    }
+
+    function rightTraverse(node){
+      rightSide.push(node.value)
+      if(node.right) rightTraverse(node.right)
+      if(node.left) rightTraverse(node..left)
+    }
+
+    leftTraverse(current.left)
+    rightTraverse(current.right)
+
+    return `${leftSide}, ${rightSide}`
+  }
+
+} 
 
 
